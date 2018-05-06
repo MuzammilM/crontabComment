@@ -27,6 +27,6 @@ if [[ "$arg" == id* ]]
         rm crontab
         crontab -l
    else
-        crontab -l > crontab && sed  '/'$1'/s/^/#/' crontab > _c  &&  mv -f _c crontab && crontab crontab && rm crontab
+        crontab -l > crontab && sed -i '/'$1'/s/^/#/' crontab && crontab crontab && rm crontab
         crontab -l
 fi

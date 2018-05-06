@@ -10,5 +10,23 @@ then
         echo -e "${COLOR}Execution : crontabComment {scriptName.sh}${reset}"
         exit
 fi
-crontab -l > cronoutput.txt && sed  '/'$1'/s/^/#/' cronoutput.txt > _c  &&  mv -f _c cronoutput.txt && crontab cronoutput.txt && rm cronoutput.txt
-crontab -l
+
+
+arg=$1
+if [[ "$arg" == id* ]]
+   then
+        echo "Commenting "$arg
+        crontab -l > crontab
+        line=`cat crontab | grep -n $1 | cut -d : -f 1`
+        line2=$((line+1))
+        echo $line
+        echo $line2
+        sed -i $line2's/^/#/' crontab
+        more crontab
+        crontab crontab
+        rm crontab
+        crontab -l
+   else
+        crontab -l > crontab && sed  '/'$1'/s/^/#/' crontab > _c  &&  mv -f _c crontab && crontab crontab && rm crontab
+        crontab -l
+fi

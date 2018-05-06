@@ -19,14 +19,13 @@ if [[ "$arg" == id* ]]
         crontab -l > crontab
         line=`cat crontab | grep -n $1 | cut -d : -f 1`
         line2=$((line+1))
-        echo $line
-        echo $line2
         sed -i $line2's/^/#/' crontab
         more crontab
         crontab crontab
         rm crontab
         crontab -l
    else
+        echo "Commenting "$1
         crontab -l > crontab && sed -i '/'$1'/s/^/#/' crontab && crontab crontab && rm crontab
         crontab -l
 fi
